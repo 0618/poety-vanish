@@ -8,10 +8,15 @@ import { Menu } from 'lucide-react';
 function App() {
   const [showLanding, setShowLanding] = useState(true);
   const [currentPoemId, setCurrentPoemId] = useState(poems[0].id);
-  const [level, setLevel] = useState(0);
+  const [level, setLevel] = useState(3);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const currentPoem = poems.find(p => p.id === currentPoemId) || poems[0];
+
+  const handleRandom = () => {
+    const randomPoem = poems[Math.floor(Math.random() * poems.length)];
+    setCurrentPoemId(randomPoem.id);
+  };
 
   useEffect(() => {
     // Only add global keydown listener if NOT on landing page
@@ -33,6 +38,11 @@ function App() {
       if (e.key === 'm') {
         setIsSidebarOpen(prev => !prev);
       }
+
+      // Random poem with 'n' (Next) or 'r' (Random)
+      if (e.key === 'n' || e.key === 'r') {
+        handleRandom();
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -40,7 +50,10 @@ function App() {
   }, [showLanding]); // Depend on showLanding
 
   if (showLanding) {
-    return <LandingPage onStart={() => setShowLanding(false)} />;
+    return <LandingPage onStart={() => {
+      handleRandom();
+      setShowLanding(false);
+    }} />;
   }
 
   return (
@@ -78,7 +91,8 @@ function App() {
 
           <div className="bg-white/50 backdrop-blur-md px-4 py-2 rounded-xl shadow-sm border border-stone-200/50 text-xs text-stone-400 font-sans max-w-[200px] text-right">
             <span className="font-bold text-stone-500">Space/Right</span> to hide <br />
-            <span className="font-bold text-stone-500">Left</span> to reveal
+            <span className="font-bold text-stone-500">Left</span> to reveal <br />
+            <span className="font-bold text-stone-500">N / R</span> for random
           </div>
         </div>
       </div>
@@ -87,6 +101,7 @@ function App() {
         poems={poems}
         currentPoemId={currentPoemId}
         onSelect={setCurrentPoemId}
+        onRandom={handleRandom}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
       />

@@ -1,17 +1,18 @@
 import React from 'react';
 import type { Poem } from '../data/poems';
-import { BookOpen, X } from 'lucide-react';
+import { BookOpen, X, Shuffle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface SidebarProps {
   poems: Poem[];
   currentPoemId: string;
   onSelect: (id: string) => void;
+  onRandom: () => void;
   isOpen: boolean;
   onClose: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ poems, currentPoemId, onSelect, isOpen, onClose }) => {
+const Sidebar: React.FC<SidebarProps> = ({ poems, currentPoemId, onSelect, onRandom, isOpen, onClose }) => {
   return (
     <>
       <AnimatePresence>
@@ -42,6 +43,19 @@ const Sidebar: React.FC<SidebarProps> = ({ poems, currentPoemId, onSelect, isOpe
                   </button>
                 </div>
 
+                <div className="mb-4">
+                  <button
+                    onClick={() => {
+                      onRandom();
+                      onClose();
+                    }}
+                    className="w-full flex items-center justify-center gap-2 p-3 bg-stone-200 hover:bg-stone-300 rounded-xl text-stone-700 font-bold transition-colors"
+                  >
+                    <Shuffle className="w-4 h-4" />
+                    随机一首
+                  </button>
+                </div>
+
                 <div className="flex-1 overflow-y-auto space-y-2 pr-2">
                   {poems.map(poem => (
                     <button
@@ -51,8 +65,8 @@ const Sidebar: React.FC<SidebarProps> = ({ poems, currentPoemId, onSelect, isOpe
                         onClose();
                       }}
                       className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 group ${currentPoemId === poem.id
-                          ? 'bg-stone-800 text-stone-50 shadow-md'
-                          : 'hover:bg-stone-200 text-stone-600'
+                        ? 'bg-stone-800 text-stone-50 shadow-md'
+                        : 'hover:bg-stone-200 text-stone-600'
                         }`}
                     >
                       <div className="text-lg font-bold font-serif">{poem.title}</div>
