@@ -81,10 +81,14 @@ function App() {
             <span className="text-stone-400 text-sm font-sans uppercase tracking-widest font-bold">Level</span>
             <div className="flex gap-1">
               {[0, 1, 2, 3].map(l => (
-                <div
+                <button
                   key={l}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${l <= level ? 'bg-stone-800 scale-110' : 'bg-stone-300 scale-90'}`}
-                />
+                  onClick={() => setLevel(l)}
+                  className={`w-6 h-6 flex items-center justify-center rounded-full transition-all duration-300 hover:bg-stone-200/50 ${l === level ? 'scale-110' : 'scale-90 hover:scale-100'}`}
+                  aria-label={`Set difficulty to level ${l}`}
+                >
+                  <div className={`w-2 h-2 rounded-full transition-all duration-300 ${l <= level ? 'bg-stone-800' : 'bg-stone-300'}`} />
+                </button>
               ))}
             </div>
           </div>
