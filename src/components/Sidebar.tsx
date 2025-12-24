@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ poems, currentPoemId, onSelect, onRan
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed left-0 top-0 bottom-0 w-80 bg-[#f7f5f0] shadow-xl z-50 border-r border-stone-200"
+              className="fixed left-0 top-0 bottom-0 w-full max-w-sm bg-[#f7f5f0] shadow-xl z-50 border-r border-stone-200"
             >
               <div className="p-6 h-full flex flex-col">
                 <div className="flex items-center justify-between mb-8">
